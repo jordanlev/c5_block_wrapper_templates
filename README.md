@@ -15,11 +15,12 @@ Drop the `block_wrapper_template_area.php` file into your site's top-level `mode
 ## Usage
 1. Create the block wrapper template file in your theme's `elements` directory.
 2. Construct your template using a few variables that are made available to it:
-    * `$innerContent`: The block's html. This must always be in the template once (and only once).
-    * `$bName`: The name of the block (or stack), as per the 'Block Name' field you see when you click on the block in edit mode and choose "Custom Template" (or the Stack Name you set in the dashboard Stacks page). This is useful for titles/headings above blocks that don't have separate fields for them (e.g. form, page list, etc.).
+    * `$innerContent`: The block's html output. This must always be in the template once (and only once).
+    * `$name`: The name of the block (or stack), as per the 'Block Name' field you see when you click on the block in edit mode and choose "Custom Template" (or the Stack Name you set in the dashboard Stacks page). This is useful for titles/headings above blocks that don't have separate fields for them (e.g. form, page list, etc.).
     * `$position`: The block's position in the area -- first block is 1, second block is 2, and so on. Use this to determine if a block is the first in the area (by checking `if ($position == 1)`), or to assign unique css class names to different blocks (e.g. `<div class="my-block-<?php echo $position; ?>">`), or to enable alternating css classes for zebra striping (`<div class="<?php echo ($position % 2) ? 'odd' : 'even'; ?>">`).
     * `$totalBlocks`: The total number of blocks in the area. Probably only useful for determining if a block is the *last* one in the area, by checking `if ($position == $totalBlocks)`.
-    * `$block`: The block object. Use this for everything else you might want to do. Note that for some things, you will need the "block instance", which you can get by calling `$block->getInstance()`. I don't understand all the ins and outs of this, but it seems that if you want general block meta-information you make calls against the block object, whereas if you want to access methods or properties of the block controller you make calls against the block instance. Another thing to note is that if the block is actually a stack, you need to do some additional stuff to interact with it -- for example, `if ($block->getBlockTypeHandle() == 'core_stack_display') { $stack = Stack::getByID($block->getInstance()->stID); }`.
+    * `$block`: The block object. Use this for everything else you might want to do. Note that for some things, you will need the "block instance", which you can get by calling `$block->getInstance()`. *I don't understand all the ins and outs of this, but it seems that if you want general block meta-information you make calls against the block object, whereas if you want to access methods or properties of the block controller you make calls against the block instance.*
+    * `$stack`: For most blocks this is null, but if the "block" being outputted is actually a stack, then this is the stack object. Note that because C5 treats an entire stack as a single block when displaying them in areas like this, the block wrapper template will go around the entire stack and not the individual blocks within the stack (which might be a good or bad thing, depending on how you look at it).
 3. Declare your block wrapper templates on the desired area(s) in your theme templates, like so:
 
         <?php
@@ -118,8 +119,8 @@ This example uses the block name (which is set by clicking on a block while in e
 
         <div class="sidebar-block">
         	<?php
-        	if (!empty($bName)) {
-        		echo '<h2>' . htmlentities($bName) . '</h2>';
+        	if (!empty($name)) {
+        		echo '<h2>' . htmlentities($name) . '</h2>';
         	}
         	echo $innerContent;
         	?>

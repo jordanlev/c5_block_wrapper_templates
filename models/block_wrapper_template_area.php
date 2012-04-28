@@ -73,16 +73,23 @@ class BlockWrapperTemplateArea extends Area {
 					$block = Block::getByID($bID);
 					
 					//Get block name (so we can send it to the template -- we don't need it ourselves)
-					$bName = ($block->getBlockTypeHandle() == 'core_stack_display') ? Stack::getByID($block->getInstance()->stID)->getStackName() : $block->getBlockName();
+					if ($block->getBlockTypeHandle() == 'core_stack_display') {
+						$stack = Stack::getByID($block->getInstance()->stID);
+						$name = $stack->getStackName();
+					} else {
+						$stack = null;
+						$name = $block->getBlockName();
+					}
 					
 					//Get templatized output
 					$filename = $this->blockWrapperTemplate;
 					$args = array(
 						'innerContent' => $innerContent,
-						'bName' => $bName,
+						'name' => $name,
 						'position' => $bPosition,
 						'totalBlocks' => $totalBlocks,
 						'block' => $block, //yes, this sets a reference to the block object (not a copy)
+						'stack' => $stack, //ditto
 					);
 					$templatedBlockOutput = $this->getTemplatedBlockOutput($filename, $args);
 					
