@@ -12,7 +12,7 @@ For example, you can do the following in your theme template:
 		?>
 	</div>
 
-Then, create a new file called `orange_sidebar_block_wrapper.php` inside your theme's `elements` folder (or anywhere inside your theme directory). Edit the new `orange_sidebar_block_wrapper.php` file and put in something like the following:
+Then, create a new file called `orange_sidebar_block_wrapper.php` inside your theme's `elements` folder. Edit the new `orange_sidebar_block_wrapper.php` file and put in something like the following:
 
 	<div style="border: 2px solid orange;">
 	  <?php echo $innerContent; ?>
@@ -20,7 +20,9 @@ Then, create a new file called `orange_sidebar_block_wrapper.php` inside your th
 
 Now every block in that sidebar area gets an orange border around it.
 
-But wait, there's more! The above example doesn't do anything that that the existing blockWrapperStart() and blockWrapperEnd() functions couldn't do already. But what if you wanted to apply a style only to the first block in the area:
+But wait, there's more! The above example doesn't do anything that that the existing blockWrapperStart() and blockWrapperEnd() functions couldn't already do. However, with the block wrapper templates, you can do many more things.
+
+For example, if you want to apply a style only to the first block in the area:
 
 	<div <?php if ($bPosition == 1) { echo 'style="border-top: 2px solid orange;"' } ?>>
 		<?php echo $innerContent; ?>
@@ -32,13 +34,13 @@ or only the last block in the area:
 		<?php echo $innerContent; ?>
 	</div>
 
-or what if you want alternating background colors on each block ("zebra striping"):
+or alternate the background color of each block ("zebra striping"):
 
 	<div class="<?php echo ($bPosition % 2) ? 'odd' : 'even'; ?>">
 		<?php echo $innerContent; ?>
 	</div>
 
-OR what if you want to have a title for each block:
+or display a title for every block (titles are taken from the Block Name field in the Custom Templates popup):
 
 	<div class="sidebar-block-wrapper">
 		<h2><?php echo $bName; ?></h2>
@@ -75,6 +77,8 @@ If you want to display the area as an accordion, with each block being its own p
 	<div class="panel">
 		<?php echo $innerContent; ?>
 	</div>
+
+The possibilities are endless!
 
 # Available Data in Templates
 Inside your block wrapper templates, the following variables are available:
