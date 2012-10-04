@@ -1,8 +1,10 @@
 # Block Wrapper Templates
 
-This addon modifies the core 'Area' functionality by adding a new "setBlockWrapperTemplate" method.
+This is a file which modifies the core 'Area' functionality by adding a new "setBlockWrapperTemplate" method.
 
-For example, you can do the following in your theme template:
+To install it on your website, move the included `area.php` file to your site's top-level `models` directory (*not* `concrete/models`).
+
+Once the `area.php` file has been placed in your site's top-level `models` directory, you can utilize this new functionality by calling the "setBlockWrapperTemplate()" function when you place areas in your theme templates (aka page type templates). For example, you could put this in your template:
 
 	<div id="sidebar">
 		<?php
