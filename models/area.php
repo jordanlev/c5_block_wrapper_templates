@@ -140,7 +140,7 @@ class Area extends Concrete5_Model_Area {
 					$bv->renderElement('block_footer');
 				}
 				if (!$c->isEditMode()) {
-					$this->enclosingEnd; //BWT_MOD: changed from: $this->outputBlockWrapper(false, $b, $blockPositionInArea);
+					echo $this->enclosingEnd; //BWT_MOD: changed from: $this->outputBlockWrapper(false, $b, $blockPositionInArea);
 				}
 			}
 			
